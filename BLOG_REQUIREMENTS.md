@@ -62,7 +62,7 @@
 ### 公共导航和页尾
 
 - 主导航固定为 **Home、Blog、Projects、Photography、Portfolio**，随界面语言翻译；博客各页面将 Blog 标记为当前栏目。
-- Home 与 Portfolio 链接指向 homepage 对应语言路径；其他子站沿用规划地址并传递 `?lang=en|zh|ja`。
+- Home、Projects、Photography 与 Portfolio 链接均指向 homepage 主站对应语言路径：英文无前缀，中文 `/zh/`，日文 `/ja/`；Blog 指向博客并传递 `?lang=en|zh|ja`。
 - 在首页红色横幅下方增加博客内部导航：**最新、分类、标签、归档、搜索**。
 - 内部页面也应提供这些入口，具体紧凑布局在主题实现中适配。
 - 手机主导航与三语下拉菜单沿用主页的交互方式，并支持键盘操作。

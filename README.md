@@ -4,7 +4,7 @@
 
 当前已完成可本地预览的第一版：首页三栏、宽正文文章页、分类、标签、归档、三语界面、文章语言筛选、独立全文搜索、目录、公式、代码复制和图片放大。已从旧博客 GitHub 默认分支导入全部 12 篇 Markdown。原有 12 篇测试文章已移至 `source/_drafts/`，默认隐藏，正常构建只展示 12 篇正式文章。已部署到 Cloudflare Workers，迁移来源与验证记录见 [MIGRATION.md](./MIGRATION.md)。
 
-正式地址配置为 `https://blog.joeyddong-site.top`，主站为 `https://joeyddong-site.top`，Projects／Photography 使用对应子域名；界面语言 Cookie 在 `joeyddong-site.top` 及其子域间共享。正式博客域名已绑定，HTTPS 与线上页面检查通过。
+正式地址配置为 `https://blog.joeyddong-site.top`，主站为 `https://joeyddong-site.top`，Projects／Photography／Portfolio 使用主站内对应语言路径；界面语言 Cookie 在 `joeyddong-site.top` 及其子域间共享。正式博客域名已绑定，HTTPS 与线上页面检查通过。
 
 ## 环境与运行
 
