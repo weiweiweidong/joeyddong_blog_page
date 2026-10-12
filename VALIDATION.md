@@ -205,3 +205,9 @@
 - 参考 homepage 的 `src/lib/site.ts`、`src/lib/i18n.ts`：Projects、Photography 和 Portfolio 指向主站内 `/projects/`、`/photography/`、`/portfolio/`，中文和日文使用 `/zh/`、`/ja/` 前缀。
 - 更新静态模板与浏览器语言切换逻辑，初始加载和切换语言后均保持正确地址。
 - 构建验证通过；首页与文章页的三语初始链接、三语切换后链接及禁用 JavaScript 时的英文静态链接均验证通过，无脚本错误。
+
+### iPhone／iPad 语言菜单失焦修复（2026-10-13）
+
+- 原代码在语言下拉菜单 focusout 时立即关闭；复现 summary 失焦且没有新的焦点元素时，菜单在语言链接点击之前被隐藏。
+- 与 homepage 当前实现一致，改为 document focusin 时仅在焦点真正进入菜单外部才关闭，保留点击外部、Escape 关闭及切换后的焦点恢复。
+- 9 项测试与构建验证通过；使用 Chromium 的中文语言环境和 iPhone／iPad 触屏模拟，在首页、文章、归档、搜索页验证三语点选、空焦点失焦回归、刷新后的偏好保持、导航语言路径及键盘／外部点击关闭，通过且无脚本错误。未在实体 iOS Safari 上测试，此次修复尚未部署。

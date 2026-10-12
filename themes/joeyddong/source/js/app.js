@@ -36,7 +36,9 @@
   menu.addEventListener('click',()=>setMenu(menu.getAttribute('aria-expanded')!=='true'));
   dropdown.addEventListener('toggle',()=>{if(dropdown.open)setMenu(false)});
   document.addEventListener('click',e=>{if(!dropdown.contains(e.target))dropdown.open=false});
-  dropdown.addEventListener('focusout',e=>{if(!dropdown.contains(e.relatedTarget))dropdown.open=false});
+  // Safari may blur the summary without focusing a tapped language link.
+  // Wait for focus to arrive outside so the pending tap can reach its link.
+  document.addEventListener('focusin',e=>{if(!dropdown.contains(e.target))dropdown.open=false});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(dropdown.open){dropdown.open=false;dropdown.querySelector('summary').focus()}if(menu.getAttribute('aria-expanded')==='true'){setMenu(false);menu.focus()}}});
   $('.main-navigation').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
   document.querySelectorAll('[data-list-filter]').forEach(select=>select.addEventListener('change',()=>{const u=new URL(select.value,location.origin);u.searchParams.set('lang',locale.get());location.assign(u)}));
