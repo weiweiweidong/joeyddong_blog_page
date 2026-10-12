@@ -1,10 +1,12 @@
 # JoeyDDong Blog：需求与实现方案汇总
 
+
+最新工具选择：用户已要求使用 npm，现以 Node.js 24.21.0、npm 11.19.0、`package-lock.json` 和 `npm ci` 为准；命令见 README 与 docs/CLOUDFLARE.md。本文中的 pnpm 描述为历史记录。
 整理日期：2026-10-12
 
 状态：已完成 Hexo 初始化与首版本地实现；实际验证结果见 [VALIDATION.md](./VALIDATION.md)。尚未正式部署。
 
-最新补充：用户随后要求迁移旧博客 GitHub 仓库的全部 Markdown，现已从 `main` 导入 12 篇并保留原有测试文章；之后按用户要求规范化文章头部，正文未改写。此前暂不迁移的范围约定已被替代，详情见 [MIGRATION.md](./MIGRATION.md)。
+最新补充：用户随后要求迁移旧博客 GitHub 仓库的全部 Markdown，现已从 `main` 导入 12 篇；之后按用户要求规范化文章头部，正文未改写。2026-10-13 原有 12 篇测试文章转为草稿，默认隐藏且不进入页面与搜索索引，文件保留供后续测试。此前暂不迁移的范围约定已被替代，详情见 [MIGRATION.md](./MIGRATION.md)。
 
 项目目录：`/Users/dongwei/JoeyDong/My_GitHub_Source/joeyddong_blog_page`
 

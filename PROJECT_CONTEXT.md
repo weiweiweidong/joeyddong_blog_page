@@ -1,5 +1,7 @@
 # JoeyDDong 新 Hexo 博客项目上下文
 
+
+最新工具选择：用户已要求使用 npm，现以 Node.js 24.21.0、npm 11.19.0、`package-lock.json` 和 `npm ci` 为准；命令见 README 与 docs/CLOUDFLARE.md。本文中的 pnpm 描述为历史记录。
 整理日期：2026-10-12
 
 将本文件放在新博客项目根目录，供新的 Codex 会话先阅读。本文区分用户已确认的需求、推荐默认方案和待确认事项；后续用户的新决定优先。
@@ -10,12 +12,14 @@
 
 用户已更新正式主域名为 **`joeyddong-site.top`**。Blog 使用 `blog.joeyddong-site.top`，Projects 与 Photography 使用对应子域名；导航、站点元信息和语言共享 Cookie 均按新域名配置。
 
+最新部署进展：用户已要求部署并确认使用独立 Cloudflare Workers。现已配置 `joeyddong-blog`、固定 Wrangler、构建校验和部署命令，完整 dry-run 与本地 Cloudflare 路由检查通过。2026-10-13 已实际上传，并成功绑定、验证 https://blog.joeyddong-site.top；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。远程 `main` 当前只有初始 README，生产集成前需合入完整代码。步骤见 [docs/CLOUDFLARE.md](./docs/CLOUDFLARE.md)，验证见 [VALIDATION.md](./VALIDATION.md)。下文“后续部署”等表述为历史状态。
+
 - 用户已确认直接基于 **Icarus 主题定制**，并融合 homepage 视觉，替代本文第 5 节的从零开发 EJS 自定义主题建议。
 - 首页为短红色横幅＋博客内部导航＋Icarus 三栏；文章页为宽正文＋右侧目录。
 - 内容区域采用浅色背景、奶油色文章卡片和淡紫／淡绿侧栏；文章封面在卡片顶部，标题在其下方，不另设红色文章标题横幅。
 - 首阶段包含三语、文章语言筛选、分类、标签、归档、独立全文搜索、目录、公式、代码复制及图片放大。
 - 用户最初确认使用测试文章、不加入评论、统计和深色模式；随后已要求复制旧博客 GitHub 仓库 `source/_posts` 的全部 Markdown，替代此前暂不迁移旧文章的决定。正式部署仍在后续安排。
-- 当前已完成 Hexo 8.1.2＋Icarus 6.1.1 的首版本地实现，并已从旧仓库 `main` 导入全部 12 篇旧文，原有 12 篇测试文章保留，共 24 篇。实际环境为 Node.js 24.21.0、pnpm 11.25.0，尚未部署。使用方式见 [README.md](./README.md)，验证结果见 [VALIDATION.md](./VALIDATION.md)，迁移详情见 [MIGRATION.md](./MIGRATION.md)。本文下方保留前期背景，不能把早期建议或待确认项误读为最新状态。
+- 当前已完成 Hexo 8.1.2＋Icarus 6.1.1 的实现，并已从旧仓库 `main` 导入全部 12 篇旧文。2026-10-13 按用户要求将原有 12 篇测试文章原样移入 `source/_drafts/`，默认不生成、不计入搜索及分类／标签／归档／文章数量；正常构建只包含 12 篇正式文章。实际环境为 Node.js 24.21.0、npm 11.19.0；测试文章隐藏改动尚未重新部署。使用方式见 [README.md](./README.md)，验证结果见 [VALIDATION.md](./VALIDATION.md)，迁移详情见 [MIGRATION.md](./MIGRATION.md)。本文下方保留前期背景，不能把早期建议或待确认项误读为最新状态。
 - 旧文头部已按后续要求规范化：显式固定 slug、中文原文语言、摘要、编程分类及 cover，移除 Keep／MathJax 专用字段并修正竞赛标签拼写。标题、发表时间、正文和文章网址保留；迁移清单只用于来源与正文校验，不再参与运行时语言判定。
 
 ## 1. 项目目标与最新决定

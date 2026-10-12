@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "joeyddong-blog",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "blog.joeyddong-site.top",
+      "custom_domain": true
+    }
+  ],
+  "build": {
+    "command": "npm run clean && npm run check && npm run verify"
+  },
+  "assets": {
+    "directory": "./public",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

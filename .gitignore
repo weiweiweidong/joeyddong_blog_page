@@ -3,6 +3,9 @@ node_modules/
 public/
 db.json
 .cache/
+.wrangler/
+.dev.vars
+.dev.vars.*
 .pnpm-store/
 *.log
 .env

@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "JoeyDDong 的 Hexo 博客，基于 Icarus 定制",
-  "packageManager": "pnpm@11.25.0",
+  "packageManager": "npm@11.19.0",
   "engines": {
-    "node": ">=24 <25"
+    "node": ">=24 <25",
+    "npm": ">=11 <12"
   },
   "hexo": {
     "version": "8.1.2"
@@ -15,7 +16,12 @@
     "build": "hexo generate --bail",
     "clean": "hexo clean",
     "check": "node --test tests/*.test.cjs",
-    "verify": "pnpm build && node tools/verify-build.cjs"
+    "verify": "npm run build && node tools/verify-build.cjs",
+    "cf:login": "wrangler login",
+    "cf:whoami": "wrangler whoami",
+    "cf:preview": "wrangler dev --ip 127.0.0.1",
+    "deploy:check": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "bulma-stylus": "0.8.0",
@@ -44,6 +50,18 @@
   "devDependencies": {
     "@babel/core": "7.29.7",
     "@babel/preset-env": "7.29.7",
+    "babel-plugin-inferno": "6.8.0",
+    "wrangler": "4.149.0"
+  },
+  "overrides": {
+    "@babel/plugin-syntax-jsx": "7.27.1",
     "babel-plugin-inferno": "6.8.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "hexo-util": true,
+    "workerd": true,
+    "fsevents": true,
+    "inferno": false
   }
 }

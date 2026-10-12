@@ -1,6 +1,0 @@
-allowBuilds:
-  hexo-util: true
-  inferno: false
-overrides:
-  '@babel/plugin-syntax-jsx': 7.27.1
-  babel-plugin-inferno: 6.8.0

@@ -2,36 +2,36 @@
 
 独立的 Hexo 博客，基于 **Icarus 6.1.1** 定制，延续 JoeyDDong homepage 的品牌视觉。
 
-当前已完成可本地预览的第一版：首页三栏、宽正文文章页、分类、标签、归档、三语界面、文章语言筛选、独立全文搜索、目录、公式、代码复制和图片放大。已从旧博客 GitHub 默认分支导入全部 12 篇 Markdown，保留原有 12 篇测试文章，共 24 篇。尚未正式部署，迁移来源与验证记录见 [MIGRATION.md](./MIGRATION.md)。
+当前已完成可本地预览的第一版：首页三栏、宽正文文章页、分类、标签、归档、三语界面、文章语言筛选、独立全文搜索、目录、公式、代码复制和图片放大。已从旧博客 GitHub 默认分支导入全部 12 篇 Markdown。原有 12 篇测试文章已移至 `source/_drafts/`，默认隐藏，正常构建只展示 12 篇正式文章。已部署到 Cloudflare Workers，迁移来源与验证记录见 [MIGRATION.md](./MIGRATION.md)。
 
-正式地址配置为 `https://blog.joeyddong-site.top`，主站为 `https://joeyddong-site.top`，Projects／Photography 使用对应子域名；界面语言 Cookie 在 `joeyddong-site.top` 及其子域间共享。这里记录配置地址，实际部署及域名解析仍需另行验证。
+正式地址配置为 `https://blog.joeyddong-site.top`，主站为 `https://joeyddong-site.top`，Projects／Photography 使用对应子域名；界面语言 Cookie 在 `joeyddong-site.top` 及其子域间共享。正式博客域名已绑定，HTTPS 与线上页面检查通过。
 
 ## 环境与运行
 
 - Node.js **24.21.0**（`.node-version`；Node 24 系列）
-- pnpm **11.25.0**（`packageManager`）
-- Hexo **8.1.2**，依赖固定版本，提交 `pnpm-lock.yaml`
+- npm **11.19.0**（`packageManager`）
+- Hexo **8.1.2**，依赖固定版本，提交 `package-lock.json`
 
 ```sh
-pnpm install --frozen-lockfile
-pnpm dev
+npm ci
+npm run dev
 ```
 
 打开 `http://127.0.0.1:4000/?lang=zh`。英文使用 `?lang=en`，日文使用 `?lang=ja`。服务仅监听本机；默认端口为 4000。
 
 ```sh
-pnpm clean       # 清理生成内容与 Hexo 缓存
-pnpm build       # hexo generate --bail，输出到 public/
-pnpm check       # 内容处理、日期、完整语言筛选分页和三语文案回归测试
-pnpm verify      # 构建并检查页面、链接、锚点、分页、搜索索引和脚本
+npm run clean       # 清理生成内容与 Hexo 缓存
+npm run build       # hexo generate --bail，输出到 public/
+npm run check       # 内容处理、日期、完整语言筛选分页和三语文案回归测试
+npm run verify      # 构建并检查页面、链接、锚点、分页、搜索索引和脚本
 ```
 
-`.npmrc` 将依赖缓存放在本项目的 `.pnpm-store/`。pnpm 安装脚本白名单仅允许 Hexo 工具生成代码高亮映射，关闭不需要的 Inferno 捐赠提示脚本。Babel/Inferno 编译依赖已固定为兼容版本，避免上游 Babel 8 与当前渲染器冲突。
+使用 `npm ci` 按锁文件安装依赖；`.npmrc` 固定新增依赖的版本。Babel/Inferno 编译依赖已固定为兼容版本，避免上游 Babel 8 与当前渲染器冲突。
 
 ## 写作
 
 ```sh
-pnpm exec hexo new post "your-article-slug"
+npm exec -- hexo new post "your-article-slug"
 ```
 
 文章位于 `source/_posts/`，使用 `scaffolds/post.md` 模板。推荐文件名及 slug 使用简短英文，标题可以使用任何语言。
@@ -61,8 +61,8 @@ tags:
 - `last_updated` 是明确的内容更新时间，可省略；不得早于发布日期。重新构建、检出 Git 或修改文件时间不会自动展示更新日期。推荐日期值加引号以便人工阅读；未加引号的 YAML 日期也按东京时区处理。
 - 封面可选；没有封面时不添加占位图。封面只在卡片中展示，不替代正文图片。
 - 已导入旧文的头部统一使用 `slug`、`article_lang`、`summary`、`categories` 和 `cover`，保留原发表时间与正文。`content/legacy-posts.json` 仅记录迁移来源和正文校验，不再参与运行时语言判定。旧 `home_cover` 的兼容回退仍保留；原有 HTML 图片和带空格的行内公式可正常渲染。
-- 测试文章使用 `test: true`。页面会显示测试标记，完整文章页会显示用途说明；正式文章不填写该字段。
-- 草稿可使用 `pnpm exec hexo new draft "slug"`，发布时使用 `pnpm exec hexo publish "slug"`。默认不渲染草稿或未来日期文章。
+- 测试文章使用 `test: true` 标记，现有 12 篇保存在 `source/_drafts/`，不进入正常构建的首页、侧栏、分类、标签、归档、搜索或文章页面。`test: true` 本身只是用途标记，隐藏由草稿目录和 `render_drafts: false` 实现。需要临时查看测试内容时，停止普通预览服务后运行 `npm run dev -- --draft`；恢复正常预览前运行 `npm run clean`，再运行 `npm run dev`。
+- 草稿可使用 `npm exec -- hexo new draft "slug"`，发布时使用 `npm exec -- hexo publish "slug"`。默认不渲染草稿或未来日期文章。
 
 图片保存到 `source/assets/images/`，文章引用 `/assets/images/文件名`。不要填写本机绝对路径。
 
@@ -97,4 +97,15 @@ $$
 - [旧文章迁移记录](./MIGRATION.md)
 - [主题来源与维护说明](./themes/joeyddong/UPSTREAM.md)
 
-首次部署、Cloudflare 配置和正式域名切换尚未实施。旧文章现使用 `/posts/slug/`，尚未设置旧站日期／短链网址重定向。Hexo 输出目录是 **`public/`**，与 Astro homepage 的 `dist/` 不同。上线前先处理测试内容，并核对独立部署设置及实际域名状态。
+## Cloudflare 部署
+
+已配置独立 Cloudflare Worker `joeyddong-blog`，静态资源目录为 **`public/`**。部署会自动清理旧输出、运行测试、构建并检查页面。
+
+```sh
+npm run deploy:check  # 完整构建与部署预检，不上传
+npm run cf:login      # 首次在浏览器中授权 Cloudflare
+npm run deploy        # 上传并发布，终端返回实际网址
+npm run cf:preview    # 在本机使用 Cloudflare 运行时预览
+```
+
+GitHub 自动部署、生产分支准备及 `blog.joeyddong-site.top` 域名绑定见 [Cloudflare 部署指南](./docs/CLOUDFLARE.md)。远程 `main` 在配置时只有初始 README，接入自动部署前需要合入完整源码。2026-10-13 已上传并验证正式地址 https://blog.joeyddong-site.top；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。12 篇测试文章已转为草稿，下一次部署将从线上移除其页面和索引；旧站日期／短链重定向尚未配置。

@@ -77,3 +77,41 @@
 用户已将正式主域名更新为 `joeyddong-site.top`。站点 URL、canonical／Open Graph 元信息、主站与子站导航、Portfolio 链接、共享语言 Cookie 和相关文档均已更新。
 
 8 项回归测试及构建验证通过。扫描 144 个生成页面，canonical 全部指向 `blog.joeyddong-site.top`，页面和前端脚本没有旧域名残留。另验证新主域与子域会设置共享 Cookie，localhost 和无关域名不设置父域 Cookie。本轮仅修正项目配置，未验证线上 DNS 或执行部署。
+
+## 后续：Cloudflare Workers 部署配置
+
+2026-10-12 按用户要求新增 `wrangler.jsonc`、固定 Wrangler 4.149.0、登录／预览／部署命令及 [部署指南](./docs/CLOUDFLARE.md)。静态资源目录为 `public/`，目录页面保留尾斜杠，缺失路径使用自定义 `404.html`。
+
+- `pnpm install --frozen-lockfile` 成功，白名单允许 `esbuild`、`workerd` 安装脚本。
+- `pnpm deploy:check` 成功：自动清空 `public/` 和 Hexo 缓存后，8 项测试、144 个页面和 24 篇文章验证通过，Wrangler 完成 dry-run。
+- Cloudflare 本地运行时：主页、文章、搜索查询、中文分类、图片和搜索索引返回 200；不存在路径返回 404，响应正文与生成的 `404.html` 一致；无尾斜杠文章地址返回 307，保留语言查询参数。
+- `git diff --check` 通过。本机预览服务验证后已停止。
+- 远程 `main` 目前只有初始 README；自动部署前需要合入完整源码。实际上传、Cloudflare Git 集成和正式域名绑定仍需登录账号后完成，不由本地预检推定成功。
+
+## 后续：切换 npm
+
+用户要求使用 npm，现已移除 pnpm 锁文件和 workspace 配置，新增 `package-lock.json`，将 Babel 兼容性 overrides 和必要依赖安装脚本策略迁入 `package.json`。README、部署指南、写作命令与 Wrangler 构建流程均改用 npm；上文 pnpm 验证结果保留为历史记录。
+
+- 本机 Node.js 24.21.0、npm 11.19.0：从无 `node_modules/` 状态生成锁文件，并成功执行 `npm ci` 安装 414 个包。
+- `npm ls --depth=0` 成功，无缺失或无效的直接依赖；新锁文件不包含 pnpm 符号链接。
+- `npm run deploy:check` 成功：清理输出后 8 项测试全部通过，144 个 HTML 页面与 24 篇文章校验通过，Wrangler dry-run 成功。
+- `git diff --check` 通过。实际上传仍需 Cloudflare 登录。
+
+## 后续：正式上线（2026-10-13）
+
+用户完成 OAuth 登录后，`npm run deploy` 成功将独立 Worker `joeyddong-blog` 发布至 Cloudflare；构建中的 8 项测试、144 个 HTML 页面和 24 篇文章验证通过。上传 239 个新资源，另 1 个资源已存在。
+
+- 版本：`eaea9565-54ad-4992-a5ed-2982ee7cf0e1`。
+- 备用地址：https://joeyddong-blog.dongweisp.workers.dev。主页、文章、搜索、中文分类、图片与索引返回 200，缺失路径返回自定义 404。
+- 正式域名：https://blog.joeyddong-site.top。Cloudflare 变更预览确认没有现有 DNS 或 Worker 冲突，绑定成功，配置已写入 Wrangler。
+- 正式域名公开 DNS 已返回 A 记录；本机 DNS 起初缓存旧的 ENOTFOUND，因此使用公开 DNS 返回的地址验证 HTTPS，保持原域名 SNI 和标准证书校验。主页、文章、搜索、中文分类、图片、24 篇搜索索引均为 200；缺失路径为自定义 404；尾斜杠重定向为 307 且保留查询参数。
+- GitHub 自动部署尚未连接；源码改动未提交／推送，远程 main 仍需合入完整项目。跨子域语言 Cookie 未做线上浏览器实测。现有 12 篇测试文章仍保留。
+
+## 测试文章隐藏（2026-10-13）
+
+按用户要求将 3 篇排版测试文章与 9 篇分页测试文章，从 `source/_posts/` 原样移入 `source/_drafts/`；继续使用 `render_drafts: false`。12 个草稿文件与 Git 中原文件逐字节一致，12 篇导入旧文的正文哈希仍全部匹配。
+
+- `npm run clean && npm run check && npm run verify` 通过：8 项测试，96 个 HTML 页面，12 篇正式文章；首页 10 篇，第二页 2 篇。
+- 默认构建不生成测试文章页面；`search-index.json` 和 Icarus 的 `content.json` 均无测试文章。分类、标签、归档、原文语言集合及页面链接检查通过。
+- 构建校验已改用正式文章检查公式与目录，并检查测试草稿是否泄漏到搜索索引或留下旧生成页面。
+- 当前运行中的 4000 端口预览仍返回旧的 24 篇索引，需停止并重新执行 `npm run dev` 以加载新状态。本次未重启用户已有进程，也未重新部署 Cloudflare；线上隐藏需下一次部署生效。
