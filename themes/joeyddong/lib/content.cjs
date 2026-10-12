@@ -32,6 +32,16 @@ function day(value) {
   return Number.isNaN(parsed.getTime()) ? '' : new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Tokyo' }).format(parsed);
 }
 function updatedDay(post) { const updated = day(post.last_updated); return updated && updated >= day(post.date) ? updated : ''; }
+function archiveGroups(posts) {
+  const groups = new Map();
+  const sorted = array(posts).sort((a, b) => day(b.date).localeCompare(day(a.date)));
+  for (const post of sorted) {
+    const year = day(post.date).slice(0, 4);
+    if (!groups.has(year)) groups.set(year, []);
+    groups.get(year).push(post);
+  }
+  return Array.from(groups, ([year, posts]) => ({ year, posts }));
+}
 function listBase(page) {
   if (page.list_base !== undefined) return page.list_base;
   if (typeof page.base === 'string') return page.base.replace(/^\//, '');
@@ -48,4 +58,4 @@ function paginate(posts, base, size = 10) {
     data: { posts: posts.slice(i * size, (i + 1) * size), current: i + 1, total, base, per_page: size }
   }));
 }
-module.exports = { languages, array, articleLanguage, plainMarkdown, searchText, excerpt, coverImage, readingTime, day, updatedDay, listBase, languagePath, paginate };
+module.exports = { languages, array, articleLanguage, plainMarkdown, searchText, excerpt, coverImage, readingTime, day, updatedDay, archiveGroups, listBase, languagePath, paginate };

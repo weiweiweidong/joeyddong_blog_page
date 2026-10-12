@@ -26,7 +26,7 @@ test('更新日期必须明确提供，Git 文件时间不影响展示；日期�
 });
 test('完整集合先按原文语言筛选，再分页，保留跨页文章与分类上下文', () => {
   const generators={};
-  const mockHexo={config:{per_page:10},extend:{generator:{register:(name,fn)=>{generators[name]=fn}},filter:{register:()=>{}}}};
+  const mockHexo={config:{per_page:10,archive_generator:{per_page:100}},extend:{generator:{register:(name,fn)=>{generators[name]=fn}},filter:{register:()=>{}}}};
   const source=path.resolve(__dirname,'../scripts/blog.cjs');
   new Function('hexo','require',fs.readFileSync(source,'utf8'))(mockHexo,createRequire(source));
   const collection=items=>({toArray:()=>items,sort:()=>collection(items)});
@@ -38,6 +38,14 @@ test('完整集合先按原文语言筛选，再分页，保留跨页文章与�
   assert.ok(languageRoutes.flatMap(r=>r.data.posts).every(p=>p.article_lang==='en'));
   assert.equal(new Set(languageRoutes.flatMap(r=>r.data.posts.map(p=>p.title))).size,15);
   assert.equal(routes.find(r=>r.path==='categories/编程/language/zh/page/2/index.html').data.category,'编程');
+  const manyPosts=Array.from({length:303},(_,i)=>({title:`article ${i}`,article_lang:['en','zh','ja'][i%3],date:'2026-10-12'}));
+  const manyRoutes=generators.joey_language_lists({posts:collection(manyPosts),categories:collection([]),tags:collection([])});
+  const archives=manyRoutes.filter(r=>/^archives\/language\/en\//.test(r.path));
+  assert.deepEqual(archives.map(r=>r.data.posts.length),[100,1]);
+  assert.ok(archives.every(r=>r.layout==='archive' && r.data.per_page===100));
+  assert.equal(new Set(archives.flatMap(r=>r.data.posts.map(p=>p.title))).size,101);
+  assert.equal(manyRoutes.filter(r=>/^language\/en\//.test(r.path)).length,11);
+
 });
 test('空语言集合仍生成可访问的空状态页', () => {
   const pages=content.paginate([], 'language/ja/');
@@ -66,4 +74,18 @@ test('旧 MathJax 行内公式允许首尾空格，邻近公式不会被合并�
   assert.doesNotMatch(html,/katex-error/);
   assert.match(html,/的时候，若/);
   assert.match(markdown.render('`$i = j $`'),/<code>\$i = j \$<\/code>/);
+});
+
+test('时间线按东京日期倒序分年，保留所有文章且不修改原集合', () => {
+  const posts=[
+    {title:'older',date:'2024-01-01'},
+    {title:'new year in Tokyo',date:'2024-12-31T15:00:00Z'},
+    {title:'previous year',date:'2023-12-31'},
+    {title:'later in 2024',date:'2024-12-25'},
+  ];
+  const groups=content.archiveGroups(posts);
+  assert.deepEqual(groups.map(g=>g.year),['2025','2024','2023']);
+  assert.deepEqual(groups.flatMap(g=>g.posts.map(p=>p.title)),['new year in Tokyo','later in 2024','older','previous year']);
+  assert.equal(posts[0].title,'older');
+  assert.deepEqual(content.archiveGroups([]),[]);
 });

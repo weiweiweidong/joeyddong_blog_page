@@ -18,8 +18,8 @@ hexo.extend.generator.register('joey_language_lists', locals => {
     }
   });
   groups.forEach((posts, base) => contexts.push({ base, posts, data: { archive: true, year: Number(base.split('/')[1]), month: Number(base.split('/')[2]) || undefined } }));
-  return contexts.flatMap(context => languages.flatMap(language => paginate(context.posts.filter(p => articleLanguage(p) === language), `${context.base}language/${language}/`, hexo.config.per_page).map(route => ({
-    ...route, layout: 'index', data: { ...route.data, ...context.data, list_base: context.base, article_filter: language }
+  return contexts.flatMap(context => languages.flatMap(language => paginate(context.posts.filter(p => articleLanguage(p) === language), `${context.base}language/${language}/`, context.data.archive ? (hexo.config.archive_generator?.per_page ?? hexo.config.per_page) : hexo.config.per_page).map(route => ({
+    ...route, layout: context.data.archive ? 'archive' : 'index', data: { ...route.data, ...context.data, list_base: context.base, article_filter: language }
   }))));
 });
 hexo.extend.generator.register('joey_search_index', locals => ({
