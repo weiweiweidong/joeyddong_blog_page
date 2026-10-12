@@ -17,9 +17,9 @@
     });
     document.querySelectorAll('[data-destination]').forEach(a => {
       const dest = a.dataset.destination, l = locale.get(), prefix = l === 'en' ? '' : `/${l}`;
-      if(dest === 'home' || dest === 'portfolio') a.href=`https://joeyddong.top${prefix}/${dest === 'portfolio' ? 'portfolio/' : ''}`;
+      if(dest === 'home' || dest === 'portfolio') a.href=`https://joeyddong-site.top${prefix}/${dest === 'portfolio' ? 'portfolio/' : ''}`;
       else if(dest === 'blog') a.href=`/?lang=${l}`;
-      else a.href=`https://${dest}.joeyddong.top/?lang=${l}`;
+      else a.href=`https://${dest}.joeyddong-site.top/?lang=${l}`;
     });
     // Preserve locale even when persistent browser storage is disabled.
     document.querySelectorAll('a[href]').forEach(a => {
@@ -67,7 +67,7 @@
   dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();moveImage(-1)}if(e.key==='ArrowRight'){e.preventDefault();moveImage(1)}});
   dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
   dialog.addEventListener('close',()=>returnFocus?.focus());
-  const heads=Array.from(document.querySelectorAll('.article-content h2[id],.article-content h3[id],.article-content h4[id]'));
+  const heads=Array.from(document.querySelectorAll('.article-content h1[id],.article-content h2[id],.article-content h3[id],.article-content h4[id]'));
   if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{const active=entries.find(e=>e.isIntersecting);if(active)document.querySelectorAll('.toc-links a').forEach(a=>{const yes=decodeURIComponent(a.hash.slice(1))===active.target.id;a.classList.toggle('active',yes);if(yes)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})},{rootMargin:'-110px 0px -65% 0px'});heads.forEach(h=>observer.observe(h))}
   window.JoeyUI={text,translate};translate();
 })();

@@ -4,6 +4,8 @@
 
 状态：已完成 Hexo 初始化与首版本地实现；实际验证结果见 [VALIDATION.md](./VALIDATION.md)。尚未正式部署。
 
+最新补充：用户随后要求迁移旧博客 GitHub 仓库的全部 Markdown，现已从 `main` 导入 12 篇并保留原有测试文章；之后按用户要求规范化文章头部，正文未改写。此前暂不迁移的范围约定已被替代，详情见 [MIGRATION.md](./MIGRATION.md)。
+
 项目目录：`/Users/dongwei/JoeyDong/My_GitHub_Source/joeyddong_blog_page`
 
 本文记录本轮咨询中用户已确认的需求，以及据此整理的实现方案。用户后续的新决定优先；本文中的最新确认替代 `PROJECT_CONTEXT.md` 中冲突的早期建议。功能完成与测试状态以 README 和验证记录为准，需求本身不作为测试通过的证据。
@@ -27,7 +29,7 @@
 ### 首阶段不包含
 
 - 正式部署与正式域名切换。
-- 旧文章迁移；暂不迁移，不等于删除旧文章或永久放弃迁移。
+- 旧站网址重定向及域名切换；旧文章 Markdown 的复制已按后续要求完成。
 - 评论、访问统计、深色模式。
 - 可视化内容管理后台。
 
@@ -197,11 +199,13 @@
 
 当前已完成 Hexo 8.1.2、Icarus 6.1.1 的本地项目初始化、主题定制、GitHub 头像本地保存、12 篇测试文章、静态构建和浏览器验证。实际环境为 Node.js 24.21.0、pnpm 11.25.0。正文更新时间字段确定为 `last_updated`，搜索参数确定为 `q` 和 `article_lang`。维护与写作流程见 README，验证结果见 VALIDATION.md。
 
+另已从 `weiweiweidong/My_Hexo_Blog_Source` 的 `main` 导入全部 12 篇原文，总计 24 篇；兼容旧封面字段、HTML 图片与原有公式格式。来源提交、校验与清单见 MIGRATION.md。
+
 后续部署阶段再确定：
 
 - 远程仓库名称、可见性与分支安排；当前本地目录已确定，早期建议的仓库名不是最终决定。
 - Cloudflare 独立项目／Worker 名称及 GitHub 自动部署设置。
-- `blog.joeyddong.top` 的正式解析、旧站现状与切换安排。
+- `blog.joeyddong-site.top` 的正式解析、旧站现状与切换安排。
 - 是否迁移旧文章、图片与旧网址兼容。
 
 正式部署继续遵循 `PROJECT_CONTEXT.md` 的方向：Hexo 输出为 `public/`，与 homepage 的 Astro `dist/` 不同；上线前验证安装、构建、部署完整流程。本轮未授权或执行正式部署。

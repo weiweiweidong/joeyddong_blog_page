@@ -13,7 +13,7 @@
   if (!valid(locale)) locale = (navigator.languages || [navigator.language]).map(l => l.toLowerCase().split('-')[0]).find(valid) || 'en';
   function remember(l) {
     try { localStorage.setItem(key,l); } catch {}
-    const domain = location.hostname === 'joeyddong.top' || location.hostname.endsWith('.joeyddong.top') ? '; Domain=joeyddong.top' : '';
+    const domain = location.hostname === 'joeyddong-site.top' || location.hostname.endsWith('.joeyddong-site.top') ? '; Domain=joeyddong-site.top' : '';
     try { document.cookie = `${key}=${l}; Path=/; Max-Age=31536000; SameSite=Lax${domain}${location.protocol === 'https:' ? '; Secure' : ''}`; } catch {}
   }
   document.documentElement.lang = locale === 'zh' ? 'zh-CN' : locale;

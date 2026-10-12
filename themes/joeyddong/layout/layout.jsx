@@ -1,7 +1,7 @@
 /* Branded adaptation of the Icarus layout: retain column/card structure and SSR. */
 const { Component, Fragment } = require('inferno');
 const { Text, Profile, Sidebars, Toc } = require('./common/brand');
-const { listBase, excerpt } = require('../lib/content.cjs');
+const { listBase, excerpt, coverImage } = require('../lib/content.cjs');
 module.exports = class extends Component {
   render() {
     const { site, config, page, helper, body } = this.props;
@@ -17,7 +17,7 @@ module.exports = class extends Component {
       <title>{title.replace(/^ — /,'')}</title><meta name="description" content={post ? excerpt(page) : config.description}/>
       <meta name="theme-color" content="#cc4942"/><link rel="icon" href={url('/assets/favicon.svg')}/><link rel="canonical" href={canonical}/>
       <meta property="og:title" content={title}/><meta property="og:type" content={post ? 'article' : 'website'}/><meta property="og:url" content={canonical}/><meta property="og:description" content={post ? excerpt(page) : config.description}/>
-      {page.cover ? <meta property="og:image" content={new URL(page.cover,config.url).href}/> : null}
+      {coverImage(page) ? <meta property="og:image" content={new URL(coverImage(page),config.url).href}/> : null}
       <link rel="stylesheet" href={url('/css/default.css')}/><link rel="stylesheet" href={url('/css/joey.css')}/>
       {post ? <link rel="stylesheet" href={url('/vendor/katex/katex.min.css')}/> : null}
       <script src={url('/js/locale.js')}/><script defer src={url('/js/messages.js')}/><script defer src={url('/js/app.js')}/>
@@ -25,9 +25,9 @@ module.exports = class extends Component {
     </head><body class={post ? 'is-2-column post-page' : 'is-3-column'} id="top">
       <a class="skip-link" href="#main"><Text k="skip"/></a>
       <header class="brand-header"><div class="brand-shell header-inner">
-        <a class="wordmark" href="https://joeyddong.top/" data-destination="home">JoeyDDong<span>.</span></a>
+        <a class="wordmark" href="https://joeyddong-site.top/" data-destination="home">JoeyDDong<span>.</span></a>
         <nav class="main-navigation" id="main-navigation" aria-label="Main navigation" data-i18n-aria="mainNav">
-          {['home','blog','projects','photography','portfolio'].map(k => <a href={k === 'blog' ? url('/') : k === 'home' ? 'https://joeyddong.top/' : k === 'portfolio' ? 'https://joeyddong.top/portfolio/' : `https://${k}.joeyddong.top/`} data-destination={k} aria-current={k === 'blog' ? 'page' : undefined}><Text k={'nav.'+k}/></a>)}
+          {['home','blog','projects','photography','portfolio'].map(k => <a href={k === 'blog' ? url('/') : k === 'home' ? 'https://joeyddong-site.top/' : k === 'portfolio' ? 'https://joeyddong-site.top/portfolio/' : `https://${k}.joeyddong-site.top/`} data-destination={k} aria-current={k === 'blog' ? 'page' : undefined}><Text k={'nav.'+k}/></a>)}
         </nav>
         <div class="header-actions"><button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" aria-label="Menu" data-i18n-aria="menu" type="button"><Text k="menu"/><span aria-hidden="true">＋</span></button>
           <details class="language-switcher"><summary class="language-toggle" aria-label="Choose language" data-i18n-aria="chooseLanguage"><span aria-hidden="true">◎</span><span id="current-language">EN</span><span aria-hidden="true">⌄</span></summary><nav class="language-options" aria-label="Choose language" data-i18n-aria="chooseLanguage">{[['en','English'],['zh','中文'],['ja','日本語']].map(([l,name]) => <a href={'?lang='+l} lang={l} data-language={l}>{name}<span class="language-check" aria-hidden="true"/></a>)}</nav></details>

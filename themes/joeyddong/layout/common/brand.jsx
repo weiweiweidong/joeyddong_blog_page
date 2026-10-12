@@ -37,7 +37,7 @@ const Profile = ({ site, helper }) => <aside class="column column-left"><div cla
   <p class="profile-name">JoeyDDong<span>.</span></p><Text k="intro" tag="p" class="profile-intro" />
   <div class="profile-stats">{[['posts',site.posts.length,'/archives/'],['categories',site.categories.length,'/categories/'],['tags',site.tags.length,'/tags/']].map(([k,n,url]) => <a href={helper.url_for(url)}><strong>{n}</strong><Text k={k} /></a>)}</div>
   <a class="brand-button" href="https://github.com/weiweiweidong">GitHub ↗</a>
-  <a class="profile-portfolio" href="https://joeyddong.top/portfolio/" data-destination="portfolio"><Text k="nav.portfolio" /> ↗</a>
+  <a class="profile-portfolio" href="https://joeyddong-site.top/portfolio/" data-destination="portfolio"><Text k="nav.portfolio" /> ↗</a>
 </div></div></aside>;
 const SidebarModule = ({ k, children, color }) => <details class={'card sidebar-module ' + (color || '')} open><summary><Text k={k} /><span aria-hidden="true">＋</span></summary><div class="sidebar-content">{children}</div></details>;
 const Sidebars = ({ site, helper }) => {

@@ -12,6 +12,7 @@ function plainMarkdown(raw, summary = false) {
   return stripHTML(text.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/^\s*[#>*+-]+\s*/gm, '').replace(/(^|\s)__([^_\n]+)__(?=$|[\s.,!?])/g, '$1$2').replace(/(^|\s)_([^_\n]+)_(?=$|[\s.,!?])/g, '$1$2').replace(/[`*~|]/g, '').replace(/<!--.*?-->/gs, '')).replace(/\s+/g, ' ').trim();
 }
 function excerpt(post) { return String(post.summary || '').trim() || plainMarkdown(post._content, true).slice(0, 180); }
+function coverImage(post) { return post.cover || post.home_cover || ''; }
 function searchText(post) { return post.content ? stripHTML(post.content).replace(/\s+/g, ' ').trim() : plainMarkdown(post._content); }
 function readingTime(post) {
   const text = plainMarkdown(post._content);
@@ -47,4 +48,4 @@ function paginate(posts, base, size = 10) {
     data: { posts: posts.slice(i * size, (i + 1) * size), current: i + 1, total, base, per_page: size }
   }));
 }
-module.exports = { languages, array, articleLanguage, plainMarkdown, searchText, excerpt, readingTime, day, updatedDay, listBase, languagePath, paginate };
+module.exports = { languages, array, articleLanguage, plainMarkdown, searchText, excerpt, coverImage, readingTime, day, updatedDay, listBase, languagePath, paginate };

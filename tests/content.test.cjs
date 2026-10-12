@@ -49,3 +49,21 @@ test('三语界面文案键完整，原文语言识别独立于界面', () => {
   assert.equal(content.articleLanguage({article_lang:'ja'}),'ja');
   assert.equal(content.readingTime({_content:''}),1);
 });
+test('文章语言由显式头部字段决定，未声明时不由文件名或迁移清单覆盖默认语言', () => {
+  assert.equal(content.articleLanguage({source:'_posts/AtCoder_386_Summary.md'}),'en');
+  assert.equal(content.articleLanguage({source:'_posts/AtCoder_386_Summary.md',article_lang:'zh',lang:'en'}),'zh');
+  assert.equal(content.articleLanguage({slug:'AtCoder_386_Summary',article_lang:'zh',language:'en'}),'zh');
+  assert.equal(content.articleLanguage({source:'_posts/AtCoder_386_Summary.md',article_lang:'en'}),'en');
+  assert.equal(content.articleLanguage({source:'_posts/new-article.md'}),'en');
+  assert.equal(content.coverImage({home_cover:'https://example.com/old.jpg'}),'https://example.com/old.jpg');
+  assert.equal(content.coverImage({cover:'/new.jpg',home_cover:'/old.jpg'}),'/new.jpg');
+});
+test('旧 MathJax 行内公式允许首尾空格，邻近公式不会被合并；代码中的美元符号保持原样', () => {
+  const MarkdownIt = createRequire(require.resolve('hexo-renderer-markdown-it'))('markdown-it');
+  const markdown = new MarkdownIt().use(require('../themes/joeyddong/lib/markdown-math.cjs'));
+  const html = markdown.render('在 $i = j $ 的时候，若 $A_i + A_j = 2A_i$ 能够被 $2^k$ 整除。');
+  assert.equal((html.match(/class="katex"/g) || []).length,3);
+  assert.doesNotMatch(html,/katex-error/);
+  assert.match(html,/的时候，若/);
+  assert.match(markdown.render('`$i = j $`'),/<code>\$i = j \$<\/code>/);
+});

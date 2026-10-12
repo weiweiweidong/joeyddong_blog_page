@@ -8,12 +8,15 @@
 
 本轮详细咨询的完整记录见根目录 [BLOG_REQUIREMENTS.md](./BLOG_REQUIREMENTS.md)。后续会话应同时阅读该文件；与本文早期建议冲突时，以该文件中的最新确认为准。
 
+用户已更新正式主域名为 **`joeyddong-site.top`**。Blog 使用 `blog.joeyddong-site.top`，Projects 与 Photography 使用对应子域名；导航、站点元信息和语言共享 Cookie 均按新域名配置。
+
 - 用户已确认直接基于 **Icarus 主题定制**，并融合 homepage 视觉，替代本文第 5 节的从零开发 EJS 自定义主题建议。
 - 首页为短红色横幅＋博客内部导航＋Icarus 三栏；文章页为宽正文＋右侧目录。
 - 内容区域采用浅色背景、奶油色文章卡片和淡紫／淡绿侧栏；文章封面在卡片顶部，标题在其下方，不另设红色文章标题横幅。
 - 首阶段包含三语、文章语言筛选、分类、标签、归档、独立全文搜索、目录、公式、代码复制及图片放大。
-- 用户已确认使用测试文章、暂不迁移旧文章，暂不加入评论、统计和深色模式；目标为完整本地可用博客，正式部署后续安排。
-- 当前已完成 Hexo 8.1.2＋Icarus 6.1.1 的首版本地实现，包括主题、三语、搜索、阅读工具与 12 篇明确标记的测试文章。实际环境为 Node.js 24.21.0、pnpm 11.25.0，未部署或迁移旧文章。使用方式见 [README.md](./README.md)，验证结果见 [VALIDATION.md](./VALIDATION.md)。本文下方保留前期背景，不能把早期建议或待确认项误读为最新状态。
+- 用户最初确认使用测试文章、不加入评论、统计和深色模式；随后已要求复制旧博客 GitHub 仓库 `source/_posts` 的全部 Markdown，替代此前暂不迁移旧文章的决定。正式部署仍在后续安排。
+- 当前已完成 Hexo 8.1.2＋Icarus 6.1.1 的首版本地实现，并已从旧仓库 `main` 导入全部 12 篇旧文，原有 12 篇测试文章保留，共 24 篇。实际环境为 Node.js 24.21.0、pnpm 11.25.0，尚未部署。使用方式见 [README.md](./README.md)，验证结果见 [VALIDATION.md](./VALIDATION.md)，迁移详情见 [MIGRATION.md](./MIGRATION.md)。本文下方保留前期背景，不能把早期建议或待确认项误读为最新状态。
+- 旧文头部已按后续要求规范化：显式固定 slug、中文原文语言、摘要、编程分类及 cover，移除 Keep／MathJax 专用字段并修正竞赛标签拼写。标题、发表时间、正文和文章网址保留；迁移清单只用于来源与正文校验，不再参与运行时语言判定。
 
 ## 1. 项目目标与最新决定
 
@@ -37,13 +40,13 @@
 
 | 栏目 | 内容 | 规划网址 |
 | --- | --- | --- |
-| Home | 个人主页 | `https://joeyddong.top` |
-| Blog | 本项目，新 Hexo 博客 | `https://blog.joeyddong.top` |
-| Projects | Coding、Vibe Coding、Data Science 等项目 | `https://projects.joeyddong.top` |
-| Photography | 摄影作品 | `https://photography.joeyddong.top` |
-| Portfolio | 主站的个人简介 | `https://joeyddong.top/portfolio/` |
+| Home | 个人主页 | `https://joeyddong-site.top` |
+| Blog | 本项目，新 Hexo 博客 | `https://blog.joeyddong-site.top` |
+| Projects | Coding、Vibe Coding、Data Science 等项目 | `https://projects.joeyddong-site.top` |
+| Photography | 摄影作品 | `https://photography.joeyddong-site.top` |
+| Portfolio | 主站的个人简介 | `https://joeyddong-site.top/portfolio/` |
 
-以上是网址规划，不表示所有子站都已上线。此前 `www.joeyddong.top` 承载旧 Blog；切换正式域名前，需要核对当时的实际解析和旧站状态。
+以上是网址规划，不表示所有子站都已上线。切换正式域名前，需要核对新域名的实际解析和旧站状态。
 
 新仓库建议命名为 `joeyddong-blog`，但尚未创建或最终确认。主站继续保留 Astro 实现。
 
@@ -121,7 +124,7 @@ Astro 组件需要适配为 Hexo 的模板；可以复用自己的设计、CSS �
 - 兼容主站跨站链接携带的 `?lang=en|zh|ja` 参数。
 - 优先尊重显式语言选择，再读取已保存偏好，最后匹配浏览器语言；未匹配时回退英文。
 - 与主页使用相同的偏好键 **`joey_locale`**。
-- 正式 `joeyddong.top` 域名及其子域名通过共享 Cookie 延续偏好；localStorage 只属于各自域名，不能视为跨域共享。
+- 正式 `joeyddong-site.top` 域名及其子域名通过共享 Cookie 延续偏好；localStorage 只属于各自域名，不能视为跨域共享。
 - 临时 `workers.dev` 地址不能共享正式域名的 Cookie，可使用参数和本地偏好。
 - 切换界面语言时保留当前文章，文章标题和正文保持原始语言。初版可在同一文章网址切换界面文案。
 - 主页中文路径为 `/zh/`、日文路径为 `/ja/`；Portfolio 对应 `/zh/portfolio/`、`/ja/portfolio/`，英文无语言前缀。跨站导航应指向对应的主站页面。

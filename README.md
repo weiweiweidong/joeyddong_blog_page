@@ -2,7 +2,9 @@
 
 独立的 Hexo 博客，基于 **Icarus 6.1.1** 定制，延续 JoeyDDong homepage 的品牌视觉。
 
-当前已完成可本地预览的第一版：首页三栏、宽正文文章页、分类、标签、归档、三语界面、文章语言筛选、独立全文搜索、目录、公式、代码复制和图片放大。当前 12 篇文章均为明确标记的测试内容，尚未正式部署或迁移旧文章。
+当前已完成可本地预览的第一版：首页三栏、宽正文文章页、分类、标签、归档、三语界面、文章语言筛选、独立全文搜索、目录、公式、代码复制和图片放大。已从旧博客 GitHub 默认分支导入全部 12 篇 Markdown，保留原有 12 篇测试文章，共 24 篇。尚未正式部署，迁移来源与验证记录见 [MIGRATION.md](./MIGRATION.md)。
+
+正式地址配置为 `https://blog.joeyddong-site.top`，主站为 `https://joeyddong-site.top`，Projects／Photography 使用对应子域名；界面语言 Cookie 在 `joeyddong-site.top` 及其子域间共享。这里记录配置地址，实际部署及域名解析仍需另行验证。
 
 ## 环境与运行
 
@@ -58,6 +60,7 @@ tags:
 - 手动 `summary` 优先，未填写则自动截取正文开头，忽略代码、公式、图片。
 - `last_updated` 是明确的内容更新时间，可省略；不得早于发布日期。重新构建、检出 Git 或修改文件时间不会自动展示更新日期。推荐日期值加引号以便人工阅读；未加引号的 YAML 日期也按东京时区处理。
 - 封面可选；没有封面时不添加占位图。封面只在卡片中展示，不替代正文图片。
+- 已导入旧文的头部统一使用 `slug`、`article_lang`、`summary`、`categories` 和 `cover`，保留原发表时间与正文。`content/legacy-posts.json` 仅记录迁移来源和正文校验，不再参与运行时语言判定。旧 `home_cover` 的兼容回退仍保留；原有 HTML 图片和带空格的行内公式可正常渲染。
 - 测试文章使用 `test: true`。页面会显示测试标记，完整文章页会显示用途说明；正式文章不填写该字段。
 - 草稿可使用 `pnpm exec hexo new draft "slug"`，发布时使用 `pnpm exec hexo publish "slug"`。默认不渲染草稿或未来日期文章。
 
@@ -91,6 +94,7 @@ $$
 - [需求与实现方案](./BLOG_REQUIREMENTS.md)
 - [项目背景与当前状态](./PROJECT_CONTEXT.md)
 - [验证记录](./VALIDATION.md)
+- [旧文章迁移记录](./MIGRATION.md)
 - [主题来源与维护说明](./themes/joeyddong/UPSTREAM.md)
 
-首次部署、Cloudflare 配置、正式域名切换和旧文章迁移尚未实施。Hexo 输出目录是 **`public/`**，与 Astro homepage 的 `dist/` 不同。上线前先处理测试内容，并核对独立部署设置及实际域名状态。
+首次部署、Cloudflare 配置和正式域名切换尚未实施。旧文章现使用 `/posts/slug/`，尚未设置旧站日期／短链网址重定向。Hexo 输出目录是 **`public/`**，与 Astro homepage 的 `dist/` 不同。上线前先处理测试内容，并核对独立部署设置及实际域名状态。

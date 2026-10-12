@@ -4,7 +4,7 @@ description: 编程笔记、学习记录，以及值得留下来的思考。
 author: JoeyDDong
 language: en
 timezone: Asia/Tokyo
-url: https://blog.joeyddong.top
+url: https://blog.joeyddong-site.top
 root: /
 permalink: posts/:slug/
 permalink_defaults: {}
@@ -56,13 +56,16 @@ tag_generator:
 theme: joeyddong
 markdown:
   render:
-    html: false
+    # Legacy articles use raw <img> elements; keep author-provided HTML renderable.
+    html: true
     xhtmlOut: false
     breaks: false
     linkify: true
     typographer: false
+  anchors:
+    level: 1
   plugins:
-    - name: markdown-it-texmath
+    - name: ./themes/joeyddong/lib/markdown-math.cjs
       options:
         delimiters: dollars
         katexOptions:

@@ -1,5 +1,9 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm');
+const crypto=require('node:crypto');
+const legacyImport=require('../content/legacy-posts.json');
+const {createRequire}=require('node:module');
+const yaml=createRequire(require.resolve('hexo/package.json'))('js-yaml');
 const root=path.resolve(__dirname,'../public');
 function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]);}
 for(const file of ['index.html','page/2/index.html','categories/index.html','tags/index.html','archives/index.html','search/index.html','posts/layout-zh/index.html','posts/layout-en/index.html','posts/layout-ja/index.html','language/zh/index.html','404.html','search-index.json','assets/images/avatar.png']) assert.ok(fs.existsSync(path.join(root,file)),`Missing ${file}`);
@@ -18,12 +22,34 @@ for(const file of htmlFiles){
  }
 }
 const index=JSON.parse(fs.readFileSync(path.join(root,'search-index.json')));
-assert.equal(index.length,12);assert.equal(new Set(index.map(p=>p.url)).size,12);
+const postFiles=walk(path.resolve(__dirname,'../source/_posts')).filter(f=>/\.(md|markdown)$/i.test(f));
+assert.equal(index.length,postFiles.length);assert.equal(new Set(index.map(p=>p.url)).size,index.length);
 assert.equal(index.filter(p=>p.text.includes('pagination_probe')).length,1);
-assert.equal(index.filter(p=>p.language==='zh').length,4);
+const legacyIndex=index.filter(p=>!p.test);
+for(const imported of legacyImport.posts){
+ const source=path.resolve(__dirname,'../source/_posts',imported.file);
+ const raw=fs.readFileSync(source);
+ const front=/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(raw.toString('utf8'));
+ assert.ok(front,`缺少头部：${imported.file}`);
+ const fields=yaml.load(front[1],{schema:yaml.JSON_SCHEMA});
+ assert.ok(fields.slug);assert.equal(fields.article_lang,'zh');assert.ok(fields.summary);
+ assert.ok(fields.categories.includes('编程'));
+ for(const old of ['home_cover','mathjax','code_block_shrink']) assert.ok(!(old in fields),`残留旧字段 ${old}：${imported.file}`);
+ assert.ok(!fields.tags.includes('Prgoramming Contest'));
+ if(process.argv.includes('--check-import')) assert.equal(crypto.createHash('sha256').update(raw.subarray(Buffer.byteLength(front[0]))).digest('hex'),imported.body_sha256,`正文校验失败：${imported.file}`);
+ const slug=fields.slug;
+ const post=legacyIndex.find(p=>decodeURIComponent(p.url)===`/posts/${slug}/`);
+ assert.ok(post,`旧文章未进入搜索索引：${imported.file}`);
+ assert.equal(post.language,imported.article_lang);
+ const html=fs.readFileSync(path.join(root,decodeURIComponent(post.url),'index.html'),'utf8');
+ assert.ok(!html.includes('class="katex-error'),`公式渲染失败：${imported.file}`);
+ assert.match(html,/<article[^>]*lang="zh"/);
+ assert.match(html,/toc-link[^>]* href=/);
+ assert.doesNotMatch(html,/&lt;img\b/);
+}
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');const second=fs.readFileSync(path.join(root,'page/2/index.html'),'utf8');
-assert.equal((home.match(/article-preview/g)||[]).length,10);assert.equal((second.match(/article-preview/g)||[]).length,2);
-const zh=fs.readFileSync(path.join(root,'language/zh/index.html'),'utf8');assert.equal((zh.match(/article-preview/g)||[]).length,4);
+assert.equal((home.match(/article-preview/g)||[]).length,Math.min(10,index.length));assert.equal((second.match(/article-preview/g)||[]).length,Math.min(10,index.length-10));
+const zh=fs.readFileSync(path.join(root,'language/zh/index.html'),'utf8');assert.equal((zh.match(/article-preview/g)||[]).length,Math.min(10,index.filter(p=>p.language==='zh').length));
 const post=fs.readFileSync(path.join(root,'posts/layout-zh/index.html'),'utf8');assert.match(post,/class="katex/);assert.match(post,/id="重复标题-2"/);assert.match(post,/toc-links/);
 for(const file of ['app.js','search.js','locale.js','messages.js'])new vm.Script(fs.readFileSync(path.join(root,'js',file),'utf8'));
-console.log(`验证通过：${htmlFiles.length} 个 HTML 页面，本地链接、锚点、分页、搜索索引、公式与前端脚本。`);
+console.log(`验证通过：${htmlFiles.length} 个 HTML 页面、${index.length} 篇文章、${legacyImport.posts.length} 篇旧文${process.argv.includes('--check-import') ? '正文校验' : '渲染检查'}，本地链接、锚点、分页、搜索索引、公式与前端脚本。`);
