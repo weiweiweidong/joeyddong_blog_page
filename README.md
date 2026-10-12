@@ -108,4 +108,4 @@ npm run deploy        # 上传并发布，终端返回实际网址
 npm run cf:preview    # 在本机使用 Cloudflare 运行时预览
 ```
 
-GitHub 自动部署、生产分支准备及 `blog.joeyddong-site.top` 域名绑定见 [Cloudflare 部署指南](./docs/CLOUDFLARE.md)。远程 `main` 在配置时只有初始 README，接入自动部署前需要合入完整源码。2026-10-13 已上传并验证正式地址 https://blog.joeyddong-site.top；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。12 篇测试文章已转为草稿，下一次部署将从线上移除其页面和索引；旧站日期／短链重定向尚未配置。
+GitHub 自动部署、生产分支准备及 `blog.joeyddong-site.top` 域名绑定见 [Cloudflare 部署指南](./docs/CLOUDFLARE.md)。远程 `main` 在配置时只有初始 README，接入自动部署前需要合入完整源码。2026-10-13 已上传并验证正式地址 https://blog.joeyddong-site.top；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。12 篇测试文章已转为草稿，并已于 2026-10-13 重新部署，从线上页面和索引移除；旧站日期／短链重定向尚未配置。
