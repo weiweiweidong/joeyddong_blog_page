@@ -221,3 +221,11 @@
 - 全部 94 个页面的 canonical 及已有 Open Graph URL 均指向 `blog.joeyddong.top`。
 - 执行生成后的语言脚本，验证主域名及子域名共享 `Domain=joeyddong.top`；localhost、无关域名及相似恶意域名不设置父域 Cookie，共检查 7 种主机名。
 - 本轮未执行部署，也未验证新域名的线上 DNS、HTTPS 或 Cloudflare 绑定。
+
+## 新域名提交与部署（2026-10-13）
+
+- 中文提交 `5b493be`：`统一站点域名为 joeyddong.top 并更新部署配置`，已推送至 GitHub `origin/dev`。
+- `npm run deploy` 成功发布 Worker `joeyddong-blog`，绑定 `blog.joeyddong.top`，版本为 `7e04153c-a9e7-47c7-bf86-227e470b857a`。部署前再次通过 9 项测试和 94 个 HTML 页面／12 篇文章校验；上传 97 个资源，94 个资源已存在。
+- 使用 curl 校验新域名 HTTPS（标准证书校验）：首页、搜索、归档、文章、中文分类、语言脚本、导航脚本、搜索索引和头像均返回 200；不存在的路径返回 404。线上索引含 12 篇正式文章，抽查页面的 canonical 指向新博客域名，页面和前端脚本无旧主域名。
+- `/search?lang=zh` 返回 307，重定向至带尾斜杠的 `/search/?lang=zh`，保留语言参数。备用 `workers.dev` 地址返回 200。
+- Python urllib 首次请求首页返回 403；改用 curl 完成上述线上校验。跨子域 Cookie 的线上浏览器行为未实测。

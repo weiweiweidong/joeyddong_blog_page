@@ -46,15 +46,15 @@ npm run cf:preview
 
 ## 正式域名
 
-2026-10-13 已将 `wrangler.jsonc` 的 Custom Domain 改为 `blog.joeyddong.top`，下次部署将使用新域名。本轮仅更新本地配置，尚未部署或验证新域名的线上绑定。此前绑定与 DNS 冲突检查针对迁移前的域名。`workers_dev: true` 保留备用地址。
+2026-10-13 已将 `wrangler.jsonc` 的 Custom Domain 改为 `blog.joeyddong.top`，并成功部署、验证新域名的 HTTPS 与线上页面。后续部署将使用该域名。`workers_dev: true` 保留备用地址。
 
 - 正式地址：https://blog.joeyddong.top
 - 备用地址：https://joeyddong-blog.dongweisp.workers.dev
-- 最新发布版本：`a1685848-1f38-442d-bfd4-907d088284d5`（2026-10-13，源码提交 `9c19d4e`）
+- 最新发布版本：`7e04153c-a9e7-47c7-bf86-227e470b857a`（2026-10-13，源码提交 `5b493be`）
 
 换账号或域名时，确保目标 zone 在对应 Cloudflare 账号中，并先核对 DNS 与现有服务。
 
-此前已验证迁移前正式域名的 HTTPS 证书、首页、`/search/`、文章、中文分类路径、图片、搜索索引、404 及保留语言查询参数的尾斜杠重定向。跨子域语言 Cookie 仍需浏览器实测。Hexo `_config.yml` 的 `url` 已指向 `https://blog.joeyddong.top`；临时预览地址的 canonical 仍指向正式地址。
+已验证新域名的 HTTPS 证书、首页、`/search/`、文章、中文分类路径、图片、搜索索引、404 及保留语言查询参数的尾斜杠重定向。跨子域语言 Cookie 仍需浏览器实测。Hexo `_config.yml` 的 `url` 已指向 `https://blog.joeyddong.top`；临时预览地址的 canonical 仍指向正式地址。
 
 2026-10-13 已将 12 篇测试文章移入 `source/_drafts/`。正常构建只发布 12 篇正式文章，草稿不会进入页面、分类、归档和搜索索引；部署前的自动清理会移除测试文章的旧生成页面。隐藏改动已于 2026-10-13 重新部署并在线验证：搜索索引包含 12 篇正式文章，全部 12 个测试文章地址返回 404。旧博客日期地址及短链重定向还未配置。
 

@@ -12,7 +12,7 @@
 
 用户已更新正式主域名为 **`joeyddong.top`**。Blog 使用 `blog.joeyddong.top`，Projects 与 Photography 使用对应子域名；导航、站点元信息和语言共享 Cookie 均按新域名配置。
 
-最新部署进展：用户已要求部署并确认使用独立 Cloudflare Workers。现已配置 `joeyddong-blog`、固定 Wrangler、构建校验和部署命令，完整 dry-run 与本地 Cloudflare 路由检查通过。此前已实际上传，并成功绑定、验证迁移前的正式域名；2026-10-13 已将本地配置切换为 https://blog.joeyddong.top，本轮尚未部署或验证新域名的线上绑定；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。远程 `main` 当前只有初始 README，生产集成前需合入完整代码。步骤见 [docs/CLOUDFLARE.md](./docs/CLOUDFLARE.md)，验证见 [VALIDATION.md](./VALIDATION.md)。下文“后续部署”等表述为历史状态。
+最新部署进展：用户已要求部署并确认使用独立 Cloudflare Workers。现已配置 `joeyddong-blog`、固定 Wrangler、构建校验和部署命令，完整 dry-run 与本地 Cloudflare 路由检查通过。2026-10-13 已将域名切换为 https://blog.joeyddong.top，成功部署并验证新域名的 HTTPS、页面、资源、搜索索引及 404；部署版本为 `7e04153c-a9e7-47c7-bf86-227e470b857a`；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。远程 `main` 当前只有初始 README，生产集成前需合入完整代码。步骤见 [docs/CLOUDFLARE.md](./docs/CLOUDFLARE.md)，验证见 [VALIDATION.md](./VALIDATION.md)。下文“后续部署”等表述为历史状态。
 
 - 用户已确认直接基于 **Icarus 主题定制**，并融合 homepage 视觉，替代本文第 5 节的从零开发 EJS 自定义主题建议。
 - 首页为短红色横幅＋博客内部导航＋Icarus 三栏；文章页为宽正文＋右侧目录。
