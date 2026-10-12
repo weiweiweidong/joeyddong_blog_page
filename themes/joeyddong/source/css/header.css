@@ -11,7 +11,8 @@
   -webkit-backdrop-filter: blur(16px);
   line-height: 1.6;
 }
-html[data-page="home"] .brand-header {
+html[data-overview] .brand-header,
+html[data-page="post"] .brand-header {
   background: rgba(163, 43, 53, .72);
 }
 .header-inner {
