@@ -45,10 +45,10 @@ const Sidebars = ({ site, helper }) => {
   const months = new Map();
   array(site.posts.sort('-date')).forEach(p => { const m = day(p.date).slice(0,7); months.set(m,(months.get(m) || 0)+1); });
   return <aside class="column column-right">
-    <SidebarModule k="recents" color="lavender"><div class="recent-list">{recent.map(p => <a href={helper.url_for(p.path)}><time dateTime={day(p.date)}>{day(p.date)}</time><span>{p.title}</span></a>)}</div></SidebarModule>
-    <SidebarModule k="categories" color="green"><ul class="term-list">{array(site.categories).map(c => <li><a href={helper.url_for(c.path)}><Category name={c.name}/><span>{c.posts.length}</span></a></li>)}</ul></SidebarModule>
-    <SidebarModule k="tags" color="lavender"><div class="tag-cloud">{array(site.tags).map(t => <a href={helper.url_for(t.path)}>#{t.name}<small>{t.posts.length}</small></a>)}</div></SidebarModule>
-    <SidebarModule k="archives" color="green"><ul class="term-list">{Array.from(months).slice(0,8).map(([m,n]) => <li><a href={helper.url_for('/archives/' + m.replace('-','/') + '/')}><span>{m}</span><span>{n}</span></a></li>)}</ul></SidebarModule>
+    <SidebarModule k="recents" color="coral"><div class="recent-list">{recent.map(p => <a href={helper.url_for(p.path)}><time dateTime={day(p.date)}>{day(p.date)}</time><span>{p.title}</span></a>)}</div></SidebarModule>
+    <SidebarModule k="categories" color="coral-light"><ul class="term-list">{array(site.categories).map(c => <li><a href={helper.url_for(c.path)}><Category name={c.name}/><span>{c.posts.length}</span></a></li>)}</ul></SidebarModule>
+    <SidebarModule k="tags" color="coral"><div class="tag-cloud">{array(site.tags).map(t => <a href={helper.url_for(t.path)}>#{t.name}<small>{t.posts.length}</small></a>)}</div></SidebarModule>
+    <SidebarModule k="archives" color="coral-light"><ul class="term-list">{Array.from(months).slice(0,8).map(([m,n]) => <li><a href={helper.url_for('/archives/' + m.replace('-','/') + '/')}><span>{m}</span><span>{n}</span></a></li>)}</ul></SidebarModule>
   </aside>;
 };
 const Toc = ({ page, helper }) => {
