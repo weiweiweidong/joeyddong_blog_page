@@ -4,7 +4,7 @@ description: 编程笔记、学习记录，以及值得留下来的思考。
 author: JoeyDDong
 language: en
 timezone: Asia/Tokyo
-url: https://blog.joeyddong-site.top
+url: https://blog.joeyddong.top
 root: /
 permalink: posts/:slug/
 permalink_defaults: {}

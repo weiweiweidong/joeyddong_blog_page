@@ -10,9 +10,9 @@
 
 本轮详细咨询的完整记录见根目录 [BLOG_REQUIREMENTS.md](./BLOG_REQUIREMENTS.md)。后续会话应同时阅读该文件；与本文早期建议冲突时，以该文件中的最新确认为准。
 
-用户已更新正式主域名为 **`joeyddong-site.top`**。Blog 使用 `blog.joeyddong-site.top`，Projects 与 Photography 使用对应子域名；导航、站点元信息和语言共享 Cookie 均按新域名配置。
+用户已更新正式主域名为 **`joeyddong.top`**。Blog 使用 `blog.joeyddong.top`，Projects 与 Photography 使用对应子域名；导航、站点元信息和语言共享 Cookie 均按新域名配置。
 
-最新部署进展：用户已要求部署并确认使用独立 Cloudflare Workers。现已配置 `joeyddong-blog`、固定 Wrangler、构建校验和部署命令，完整 dry-run 与本地 Cloudflare 路由检查通过。2026-10-13 已实际上传，并成功绑定、验证 https://blog.joeyddong-site.top；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。远程 `main` 当前只有初始 README，生产集成前需合入完整代码。步骤见 [docs/CLOUDFLARE.md](./docs/CLOUDFLARE.md)，验证见 [VALIDATION.md](./VALIDATION.md)。下文“后续部署”等表述为历史状态。
+最新部署进展：用户已要求部署并确认使用独立 Cloudflare Workers。现已配置 `joeyddong-blog`、固定 Wrangler、构建校验和部署命令，完整 dry-run 与本地 Cloudflare 路由检查通过。此前已实际上传，并成功绑定、验证迁移前的正式域名；2026-10-13 已将本地配置切换为 https://blog.joeyddong.top，本轮尚未部署或验证新域名的线上绑定；备用地址为 https://joeyddong-blog.dongweisp.workers.dev。GitHub 自动部署尚未连接。远程 `main` 当前只有初始 README，生产集成前需合入完整代码。步骤见 [docs/CLOUDFLARE.md](./docs/CLOUDFLARE.md)，验证见 [VALIDATION.md](./VALIDATION.md)。下文“后续部署”等表述为历史状态。
 
 - 用户已确认直接基于 **Icarus 主题定制**，并融合 homepage 视觉，替代本文第 5 节的从零开发 EJS 自定义主题建议。
 - 首页为短红色横幅＋博客内部导航＋Icarus 三栏；文章页为宽正文＋右侧目录。
@@ -44,11 +44,11 @@
 
 | 栏目 | 内容 | 规划网址 |
 | --- | --- | --- |
-| Home | 个人主页 | `https://joeyddong-site.top` |
-| Blog | 本项目，新 Hexo 博客 | `https://blog.joeyddong-site.top` |
-| Projects | Coding、Vibe Coding、Data Science 等项目 | `https://projects.joeyddong-site.top` |
-| Photography | 摄影作品 | `https://photography.joeyddong-site.top` |
-| Portfolio | 主站的个人简介 | `https://joeyddong-site.top/portfolio/` |
+| Home | 个人主页 | `https://joeyddong.top` |
+| Blog | 本项目，新 Hexo 博客 | `https://blog.joeyddong.top` |
+| Projects | Coding、Vibe Coding、Data Science 等项目 | `https://projects.joeyddong.top` |
+| Photography | 摄影作品 | `https://photography.joeyddong.top` |
+| Portfolio | 主站的个人简介 | `https://joeyddong.top/portfolio/` |
 
 以上是网址规划，不表示所有子站都已上线。切换正式域名前，需要核对新域名的实际解析和旧站状态。
 
@@ -128,7 +128,7 @@ Astro 组件需要适配为 Hexo 的模板；可以复用自己的设计、CSS �
 - 兼容主站跨站链接携带的 `?lang=en|zh|ja` 参数。
 - 优先尊重显式语言选择，再读取已保存偏好，最后匹配浏览器语言；未匹配时回退英文。
 - 与主页使用相同的偏好键 **`joey_locale`**。
-- 正式 `joeyddong-site.top` 域名及其子域名通过共享 Cookie 延续偏好；localStorage 只属于各自域名，不能视为跨域共享。
+- 正式 `joeyddong.top` 域名及其子域名通过共享 Cookie 延续偏好；localStorage 只属于各自域名，不能视为跨域共享。
 - 临时 `workers.dev` 地址不能共享正式域名的 Cookie，可使用参数和本地偏好。
 - 切换界面语言时保留当前文章，文章标题和正文保持原始语言。初版可在同一文章网址切换界面文案。
 - 主页中文路径为 `/zh/`、日文路径为 `/ja/`；Portfolio 对应 `/zh/portfolio/`、`/ja/portfolio/`，英文无语言前缀。跨站导航应指向对应的主站页面。

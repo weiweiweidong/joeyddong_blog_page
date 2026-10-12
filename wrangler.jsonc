@@ -5,7 +5,7 @@
   "workers_dev": true,
   "routes": [
     {
-      "pattern": "blog.joeyddong-site.top",
+      "pattern": "blog.joeyddong.top",
       "custom_domain": true
     }
   ],

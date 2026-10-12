@@ -74,9 +74,9 @@
 
 ## 后续：正式域名更新
 
-用户已将正式主域名更新为 `joeyddong-site.top`。站点 URL、canonical／Open Graph 元信息、主站与子站导航、Portfolio 链接、共享语言 Cookie 和相关文档均已更新。
+此前已更新当时的正式主域名。站点 URL、canonical／Open Graph 元信息、主站与子站导航、Portfolio 链接、共享语言 Cookie 和相关文档均已更新。
 
-8 项回归测试及构建验证通过。扫描 144 个生成页面，canonical 全部指向 `blog.joeyddong-site.top`，页面和前端脚本没有旧域名残留。另验证新主域与子域会设置共享 Cookie，localhost 和无关域名不设置父域 Cookie。本轮仅修正项目配置，未验证线上 DNS 或执行部署。
+8 项回归测试及构建验证通过。扫描 144 个生成页面，canonical 全部指向当时的正式博客域名，页面和前端脚本没有旧域名残留。另验证新主域与子域会设置共享 Cookie，localhost 和无关域名不设置父域 Cookie。本轮仅修正项目配置，未验证线上 DNS 或执行部署。
 
 ## 后续：Cloudflare Workers 部署配置
 
@@ -103,7 +103,7 @@
 
 - 版本：`eaea9565-54ad-4992-a5ed-2982ee7cf0e1`。
 - 备用地址：https://joeyddong-blog.dongweisp.workers.dev。主页、文章、搜索、中文分类、图片与索引返回 200，缺失路径返回自定义 404。
-- 正式域名：https://blog.joeyddong-site.top。Cloudflare 变更预览确认没有现有 DNS 或 Worker 冲突，绑定成功，配置已写入 Wrangler。
+- 当时的正式域名（迁移前）：Cloudflare 变更预览确认没有现有 DNS 或 Worker 冲突，绑定成功，配置已写入 Wrangler。
 - 正式域名公开 DNS 已返回 A 记录；本机 DNS 起初缓存旧的 ENOTFOUND，因此使用公开 DNS 返回的地址验证 HTTPS，保持原域名 SNI 和标准证书校验。主页、文章、搜索、中文分类、图片、24 篇搜索索引均为 200；缺失路径为自定义 404；尾斜杠重定向为 307 且保留查询参数。
 - GitHub 自动部署尚未连接；源码改动未提交／推送，远程 main 仍需合入完整项目。跨子域语言 Cookie 未做线上浏览器实测。现有 12 篇测试文章仍保留。
 
@@ -211,3 +211,13 @@
 - 原代码在语言下拉菜单 focusout 时立即关闭；复现 summary 失焦且没有新的焦点元素时，菜单在语言链接点击之前被隐藏。
 - 与 homepage 当前实现一致，改为 document focusin 时仅在焦点真正进入菜单外部才关闭，保留点击外部、Escape 关闭及切换后的焦点恢复。
 - 9 项测试与构建验证通过；使用 Chromium 的中文语言环境和 iPhone／iPad 触屏模拟，在首页、文章、归档、搜索页验证三语点选、空焦点失焦回归、刷新后的偏好保持、导航语言路径及键盘／外部点击关闭，通过且无脚本错误。未在实体 iOS Safari 上测试，此次修复尚未部署。
+
+## 域名切换为 joeyddong.top（2026-10-13）
+
+按用户最新要求将主域名统一为 `joeyddong.top`，博客保留 `blog` 子域名，正式地址为 `https://blog.joeyddong.top`。更新 Hexo URL、Cloudflare Custom Domain、模板导航与 Portfolio 链接、按语言生成的跨站导航和共享 Cookie 父域，并同步项目说明。上文的上线与域名验证为迁移前的历史记录，不代表本轮对新域名的线上验证。
+
+- `npm run clean && npm run check && npm run verify` 通过：9 项测试、94 个 HTML 页面、12 篇正式文章。
+- 扫描源码、文档及清理后重新生成的 `public/`，未发现旧主域名残留（排除 Git 历史、依赖及 Wrangler 本地缓存）。
+- 全部 94 个页面的 canonical 及已有 Open Graph URL 均指向 `blog.joeyddong.top`。
+- 执行生成后的语言脚本，验证主域名及子域名共享 `Domain=joeyddong.top`；localhost、无关域名及相似恶意域名不设置父域 Cookie，共检查 7 种主机名。
+- 本轮未执行部署，也未验证新域名的线上 DNS、HTTPS 或 Cloudflare 绑定。

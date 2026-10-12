@@ -18,7 +18,7 @@
     document.querySelectorAll('[data-destination]').forEach(a => {
       const dest = a.dataset.destination, l = locale.get(), prefix = l === 'en' ? '' : `/${l}`;
       if(dest === 'blog') a.href=`/?lang=${l}`;
-      else a.href=`https://joeyddong-site.top${prefix}/${dest === 'home' ? '' : dest + '/'}`;
+      else a.href=`https://joeyddong.top${prefix}/${dest === 'home' ? '' : dest + '/'}`;
     });
     // Preserve locale even when persistent browser storage is disabled.
     document.querySelectorAll('a[href]').forEach(a => {

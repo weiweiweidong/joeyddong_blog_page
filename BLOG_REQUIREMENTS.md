@@ -211,7 +211,7 @@
 
 - 远程仓库名称、可见性与分支安排；当前本地目录已确定，早期建议的仓库名不是最终决定。
 - Cloudflare 独立项目／Worker 名称及 GitHub 自动部署设置。
-- `blog.joeyddong-site.top` 的正式解析、旧站现状与切换安排。
+- `blog.joeyddong.top` 的正式解析、旧站现状与切换安排。
 - 是否迁移旧文章、图片与旧网址兼容。
 
 正式部署继续遵循 `PROJECT_CONTEXT.md` 的方向：Hexo 输出为 `public/`，与 homepage 的 Astro `dist/` 不同；上线前验证安装、构建、部署完整流程。本轮未授权或执行正式部署。
