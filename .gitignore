@@ -1,1 +1,10 @@
 .DS_Store
+node_modules/
+public/
+db.json
+.cache/
+.pnpm-store/
+*.log
+.env
+.env.*
+!.env.example

@@ -1,0 +1,38 @@
+# Icarus 6.1.1 configuration schema; branded layouts are in layout/.
+version: 5.1.0
+variant: default
+logo:
+  text: JoeyDDong.
+head:
+  favicon: /assets/favicon.svg
+article:
+  highlight:
+    theme: atom-one-light
+    clipboard: true
+    fold: unfolded
+  readtime: true
+  update_time: auto
+  licenses: {}
+search:
+  type: insight
+  index_pages: false
+widgets:
+  - type: profile
+    position: left
+  - type: recent_posts
+    position: right
+  - type: categories
+    position: right
+  - type: tags
+    position: right
+  - type: archives
+    position: right
+plugins:
+  animejs: false
+  back_to_top: false
+  busuanzi: false
+  gallery: false
+  katex: false
+  mathjax: false
+  pjax: false
+providers: {}
