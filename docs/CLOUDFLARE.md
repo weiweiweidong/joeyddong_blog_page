@@ -50,7 +50,7 @@ npm run cf:preview
 
 - 正式地址：https://blog.joeyddong.top
 - 备用地址：https://joeyddong-blog.dongweisp.workers.dev
-- 最新发布版本：`3a698bdb-ae3c-49b7-97a0-4b5d8d1eb1ca`（2026-10-17，补齐 8 篇本机笔记，正式文章共 20 篇）
+- 最新发布版本：`61dc5d6b-e629-49e3-a812-4ad1b3798516`（2026-10-17，源码提交 `b23bad8`，正式文章共 20 篇）
 
 换账号或域名时，确保目标 zone 在对应 Cloudflare 账号中，并先核对 DNS 与现有服务。
 
