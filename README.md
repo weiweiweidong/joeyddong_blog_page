@@ -91,6 +91,7 @@ $$
 
 ## 项目文档
 
+- [文章写作、Git 提交与手动部署指南](./docs/PUBLISHING.md)
 - [需求与实现方案](./BLOG_REQUIREMENTS.md)
 - [项目背景与当前状态](./PROJECT_CONTEXT.md)
 - [验证记录](./VALIDATION.md)
